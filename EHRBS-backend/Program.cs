@@ -32,10 +32,21 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
+    options.Cookie.Name = "YouCanSetACookieNameHere";
     options.IdleTimeout = TimeSpan.FromHours(3); // Set session timeout
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+//context.Response.Cookies.Append("JwtToken", token, new CookieOptions
+//{
+//    HttpOnly = true,
+//    Secure = true,
+//    SameSite = SameSiteMode.Strict,
+//    Expires = DateTime.UtcNow.AddHours(3)
+//});
+
+builder.Services.AddScoped<JwtService>(); // Ensure JwtService is available
+
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
