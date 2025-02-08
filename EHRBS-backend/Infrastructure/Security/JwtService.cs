@@ -1,19 +1,22 @@
 ﻿using EHRBS_backend.Domain.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
 namespace EHRBS_backend.Infrastructure.Security
 {
     public class JwtService
     {
         private readonly JwtOptions _jwtOptions;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public JwtService(IOptions<JwtOptions> jwtOptions)
+        public JwtService(IOptions<JwtOptions> jwtOptions, IHttpContextAccessor httpContextAccessor)
         {
             _jwtOptions = jwtOptions.Value;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public string GenerateJwtToken(User user)
@@ -28,10 +31,10 @@ namespace EHRBS_backend.Infrastructure.Security
 
             var claims = new List<Claim>
             {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // Prevent token replay
+            };
 
             var token = new JwtSecurityToken(
                 _jwtOptions.Issuer,
@@ -41,7 +44,17 @@ namespace EHRBS_backend.Infrastructure.Security
                 signingCredentials: credentials
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+            // Store token in session
+            _httpContextAccessor.HttpContext.Session.SetString("JwtToken", tokenString);
+
+            return tokenString;
+        }
+
+        public void Logout()
+        {
+            _httpContextAccessor.HttpContext.Session.Remove("JwtToken");
         }
     }
 }
