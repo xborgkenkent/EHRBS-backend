@@ -31,7 +31,7 @@ public class LoginUserHandler : IRequestHandler<LoginUserCommand, AuthResponse>
         var user = await _userRepository.GetUserByEmailAsync(request.Email);
         if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
         {
-            return new AuthResponse { Success = false, Message = "Invalid credentials" };
+            throw new UnauthorizedAccessException("Invalid email or password.");
         }
 
         // Generate JWT token
