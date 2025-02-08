@@ -54,7 +54,13 @@ namespace EHRBS_backend.Infrastructure.Security
 
         public void Logout()
         {
-            _httpContextAccessor.HttpContext.Session.Remove("JwtToken");
+            var context = _httpContextAccessor.HttpContext;
+
+            if (context != null)
+            {
+                context.Response.Cookies.Delete("JwtToken");
+            }
         }
+
     }
 }
