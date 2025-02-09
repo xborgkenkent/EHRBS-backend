@@ -14,49 +14,36 @@ using EHRBS_backend.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// 🔹 Add Database Context
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register Repositories
+// 🔹 Register Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-// Add MediatR
+// 🔹 Add MediatR (for CQRS)
 builder.Services.AddMediatR(typeof(RegisterUserHandler).Assembly);
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
-// Add services to the container.
-
-builder.Services.AddControllers();
+// 🔹 Add HttpContextAccessor (Required for accessing HttpContext)
 builder.Services.AddHttpContextAccessor();
+
+// 🔹 Add Session Support
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.Cookie.Name = "YouCanSetACookieNameHere";
+    options.Cookie.Name = "EHRBS_Session";
     options.IdleTimeout = TimeSpan.FromHours(3); // Set session timeout
+    options.Cookie.SameSite = SameSiteMode.Strict;
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-//context.Response.Cookies.Append("JwtToken", token, new CookieOptions
-//{
-//    HttpOnly = true,
-//    Secure = true,
-//    SameSite = SameSiteMode.Strict,
-//    Expires = DateTime.UtcNow.AddHours(3)
-//});
 
-builder.Services.AddScoped<JwtService>(); // Ensure JwtService is available
-
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+// 🔹 Register Services
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
-builder.Services.AddSingleton<JwtService>();
+builder.Services.AddScoped<JwtService>(); // ✅ Use Scoped, Not Singleton
 
-// Add authentication
+// 🔹 Configure Authentication & JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -72,11 +59,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddAuthorization();
 
-builder.Services.AddSingleton<JwtService>();
+// 🔹 Add Swagger for API Documentation
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// 🔹 Add Controllers
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
+// 🔹 Enable Swagger UI in Development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -85,12 +79,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseSession();  // ✅ Ensure session is set before middleware
+// 🔹 Ensure Session is Configured BEFORE Middleware Uses It
+app.UseSession();
 
-app.UseMiddleware<SessionJwtMiddleware>();  // ✅ This should be AFTER session is set
+// 🔹 Apply Custom Middleware for Session Authentication (Only After Session Is Set)
+//app.UseMiddleware<SessionJwtMiddleware>();
 
+// 🔹 Enable Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
+// 🔹 Map Controllers
 app.MapControllers();
+
 app.Run();
