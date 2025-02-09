@@ -46,9 +46,6 @@ namespace EHRBS_backend.Infrastructure.Security
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-            // Store token in session
-            _httpContextAccessor.HttpContext.Session.SetString("JwtToken", tokenString);
-
             return tokenString;
         }
 
