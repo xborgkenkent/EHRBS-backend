@@ -5,6 +5,7 @@ using System.Text;
 using EHRBS_backend.Application.Commands;
 using EHRBS_backend.Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EHRBS.API.Controllers
 {
@@ -42,7 +43,23 @@ namespace EHRBS.API.Controllers
                 return Unauthorized(response.Message);
             }
 
+            // Store the token in an HTTP-only cookie
+            Response.Cookies.Append("YouCanSetACookieNameHere11111", response.Token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true, // Ensure HTTPS is used
+                SameSite = SameSiteMode.Strict, // Prevent CSRF attacks
+                Expires = DateTime.UtcNow.AddHours(3)
+            });
+
             return Ok(response);
+        }
+
+        [Authorize]
+        [HttpGet("private")]
+        public IActionResult PrivateEndpoint()
+        {
+            return Ok("Only logged-in users can access this.");
         }
     }
 
