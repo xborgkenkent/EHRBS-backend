@@ -55,7 +55,7 @@ namespace EHRBS_backend.Infrastructure.Security
 
             if (context != null)
             {
-                context.Response.Cookies.Delete("JwtToken");
+                context.Response.Cookies.Delete("EHRBS_xdafga");
             }
         }
 
