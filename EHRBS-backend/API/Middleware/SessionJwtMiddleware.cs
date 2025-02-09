@@ -19,7 +19,7 @@ namespace EHRBS_backend.API.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            var token = context.Session.GetString("JwtToken");
+            var token = context.Session.GetString("EHRBS_Session1111");
 
             if (!string.IsNullOrEmpty(token))
             {
