@@ -31,8 +31,8 @@ namespace EHRBS_backend.Infrastructure.Security
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
+                new Claim("id", user.Id.ToString()),
+                new Claim("email", user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // Prevent token replay
             };
 
