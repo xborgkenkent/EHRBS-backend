@@ -1,6 +1,7 @@
 ﻿using EHRBS_backend.Infrastructure.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EHRBS_backend.API.Controllers
 {
@@ -15,6 +16,7 @@ namespace EHRBS_backend.API.Controllers
             _jwtService = jwtService;
         }
 
+        [Authorize]
         [HttpPost("logout")]
         public IActionResult Logout()
         {
