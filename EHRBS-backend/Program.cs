@@ -30,14 +30,6 @@ builder.Services.AddHttpContextAccessor();
 
 // 🔹 Add Session Support
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options =>
-{
-    options.Cookie.Name = "EHRBS_Session";
-    options.IdleTimeout = TimeSpan.FromHours(3); // Set session timeout
-    options.Cookie.SameSite = SameSiteMode.Strict;
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
 
 // 🔹 Register Services
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
@@ -78,12 +70,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-// 🔹 Ensure Session is Configured BEFORE Middleware Uses It
-app.UseSession();
-
-// 🔹 Apply Custom Middleware for Session Authentication (Only After Session Is Set)
-//app.UseMiddleware<SessionJwtMiddleware>();
 
 // 🔹 Enable Authentication & Authorization
 app.UseAuthentication();
