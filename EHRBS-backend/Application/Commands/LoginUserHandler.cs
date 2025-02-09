@@ -36,6 +36,6 @@ public class LoginUserHandler : IRequestHandler<LoginUserCommand, AuthResponse>
 
         // Generate JWT token
         var token = _jwtService.GenerateJwtToken(user);
-        return new AuthResponse { Success = true, Token = token };
+        return new AuthResponse { Success = true, Token = token, Message = "adasds" };
     }
 }
