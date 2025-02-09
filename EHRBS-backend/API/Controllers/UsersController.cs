@@ -44,7 +44,7 @@ namespace EHRBS.API.Controllers
             }
 
             // Store the token in an HTTP-only cookie
-            Response.Cookies.Append("YouCanSetACookieNameHere11111", response.Token, new CookieOptions
+            Response.Cookies.Append("EHRBS_xdafga", response.Token, new CookieOptions
             {
                 HttpOnly = true,
                 Secure = true, // Ensure HTTPS is used
