@@ -28,7 +28,7 @@ namespace EHRBS.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetUser(Guid id)
         {
             var result = await _mediator.Send(new GetUserByIdQuery { Id = id });
             return result != null ? Ok(result) : NotFound();
