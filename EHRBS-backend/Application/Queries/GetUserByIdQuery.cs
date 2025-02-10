@@ -5,7 +5,7 @@ namespace EHRBS_backend.Application.Queries
 {
     public class GetUserByIdQuery : IRequest<UserResponse>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 
 }
