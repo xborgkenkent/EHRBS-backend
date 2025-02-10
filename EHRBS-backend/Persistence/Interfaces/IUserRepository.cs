@@ -7,6 +7,6 @@ namespace EHRBS_backend.Persistence.Interfaces
     {
         Task AddUserAsync(User user);
         Task<User> GetUserByEmailAsync(string email);
-        Task<User> GetUserByIdAsync(int id);
+        Task<User> GetUserByIdAsync(Guid id);
     }
 }
