@@ -20,7 +20,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, bool>
         {
             FullName = request.FullName,
             Email = request.Email,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password) // ✅ Fix here
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password)
         };
         Console.WriteLine("call me first");
         await _userRepository.AddUserAsync(user);
