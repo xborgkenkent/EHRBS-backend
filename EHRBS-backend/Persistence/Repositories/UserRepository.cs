@@ -22,7 +22,7 @@ namespace EHRBS_backend.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<User> GetUserByIdAsync(Guid id)
         {
             return await _context.Users.FindAsync(id);
         }
