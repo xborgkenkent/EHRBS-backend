@@ -20,9 +20,10 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, bool>
         {
             FullName = request.FullName,
             Email = request.Email,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password)
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+            Role = EHRBS_backend.Domain.Enums.UserRole.Doctor
         };
-        Console.WriteLine("call me first");
+
         await _userRepository.AddUserAsync(user);
         return true;
     }

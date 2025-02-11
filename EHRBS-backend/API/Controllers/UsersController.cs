@@ -20,6 +20,14 @@ namespace EHRBS.API.Controllers
             _mediator = mediator;
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> All()
+        {
+            var result = await _mediator.Send(new GetAllUsersQuery { });
+            return Ok(result);
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser(RegisterUserCommand command)
         {
@@ -53,13 +61,6 @@ namespace EHRBS.API.Controllers
             });
 
             return Ok(response);
-        }
-
-        [Authorize]
-        [HttpGet("private")]
-        public IActionResult PrivateEndpoint()
-        {
-            return Ok("Only logged-in users can access this.");
         }
     }
 

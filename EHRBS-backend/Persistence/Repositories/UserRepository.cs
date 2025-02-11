@@ -27,6 +27,11 @@ namespace EHRBS_backend.Persistence.Repositories
             return await _context.Users.FindAsync(id);
         }
 
+        public async Task<List<User>> GetAllUser()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
         public async Task<User> GetUserByEmailAsync(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
