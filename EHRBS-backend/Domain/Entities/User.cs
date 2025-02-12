@@ -15,5 +15,7 @@ public class User
     public required string PasswordHash { get; set; }
     [Required]
     public UserRole Role { get; set; } = UserRole.User;
+    [Required]
+    public Guid TenantId { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
