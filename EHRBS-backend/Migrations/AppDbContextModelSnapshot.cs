@@ -22,6 +22,130 @@ namespace EHRBS_backend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("EHRBS_backend.Domain.Entities.Doctors", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClinicId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("ConsultationFee")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("ExperienceYears")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("LicenseNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Specialty")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("EHRBS_backend.Domain.Entities.Messages", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("EncryptedMessage")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ReceiverId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("EHRBS_backend.Domain.Entities.Patients", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BloodType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("EmergencyContact")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("InsuranceProvider")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MedicalRecordNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("EHRBS_backend.Domain.Entities.Tenants", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactEmail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenants");
+                });
+
             modelBuilder.Entity("EHRBS_backend.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -50,9 +174,69 @@ namespace EHRBS_backend.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("EHRBS_backend.Domain.Entities.Doctors", b =>
+                {
+                    b.HasOne("EHRBS_backend.Domain.Entities.Tenants", "Tenants")
+                        .WithMany("Doctors")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("EHRBS_backend.Domain.Entities.Availability", "Availability", b1 =>
+                        {
+                            b1.Property<Guid>("DoctorsId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Days")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("EndTime")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("StartTime")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("DoctorsId");
+
+                            b1.ToTable("Doctors");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DoctorsId");
+                        });
+
+                    b.Navigation("Availability")
+                        .IsRequired();
+
+                    b.Navigation("Tenants");
+                });
+
+            modelBuilder.Entity("EHRBS_backend.Domain.Entities.Patients", b =>
+                {
+                    b.HasOne("EHRBS_backend.Domain.Entities.Tenants", "Tenants")
+                        .WithMany("Patients")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tenants");
+                });
+
+            modelBuilder.Entity("EHRBS_backend.Domain.Entities.Tenants", b =>
+                {
+                    b.Navigation("Doctors");
+
+                    b.Navigation("Patients");
                 });
 #pragma warning restore 612, 618
         }
