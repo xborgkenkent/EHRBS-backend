@@ -2,13 +2,13 @@
 
 ## Core Features
 
-- **End-to-End Encryption (E2EE)** - sfsdf
-- **Secure User Authentication**
-- ** Appointment Scheduling**
-- **Billing & Payment Processing**
-- **Compliance & Audit Logs**
-- **Prescription & Lab Reports**
-- **Multi-Tenant Support**
+- **End-to-End Encryption (E2EE)** - Encrypt patient records, prescriptions, and communication
+- **Secure User Authentication** -  Role-based access (Doctors, Patients, Admins)
+- **Appointment Scheduling** - Encrypted booking system for consultations
+- **Billing & Payment Processing** - Integrate Stripe, PayPal, or insurance claim handling
+- **Compliance & Audit Logs** -  Ensure GDPR/HIPAA compliance
+- **Prescription & Lab Reports** - Encrypted document storage & sharing
+- **Multi-Tenant Support** - Clinics, hospitals, and independent doctors can use it
 
 # Sequence Diagram
 ![ehrbs-sqnc](https://github.com/user-attachments/assets/83992619-0c52-4f27-98ab-1128c5cea0fc)
