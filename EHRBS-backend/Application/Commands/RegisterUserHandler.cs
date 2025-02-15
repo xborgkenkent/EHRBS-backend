@@ -16,7 +16,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, bool>
 
     public async Task<bool> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
-        var user = new User
+        var user = new Users
         {
             FullName = request.FullName,
             Email = request.Email,
