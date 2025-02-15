@@ -19,7 +19,7 @@ namespace EHRBS_backend.Infrastructure.Security
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string GenerateJwtToken(User user)
+        public string GenerateJwtToken(Users user)
         {
             if (string.IsNullOrWhiteSpace(_jwtOptions.Key) || _jwtOptions.Key.Length < 32)
             {
