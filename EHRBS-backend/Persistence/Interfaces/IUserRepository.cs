@@ -5,9 +5,9 @@ namespace EHRBS_backend.Persistence.Interfaces
 {
     public interface IUserRepository
     {
-        Task AddUserAsync(User user);
-        Task<User> GetUserByEmailAsync(string email);
-        Task<User> GetUserByIdAsync(Guid id);
-        Task<List<User>> GetAllUser();
+        Task AddUserAsync(Users user);
+        Task<Users> GetUserByEmailAsync(string email);
+        Task<Users> GetUserByIdAsync(Guid id);
+        Task<List<Users>> GetAllUser();
     }
 }

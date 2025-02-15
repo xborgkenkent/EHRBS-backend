@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using EHRBS_backend.Domain.Entities;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public class UserConfiguration : IEntityTypeConfiguration<Users>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<Users> builder)
     {
         builder.HasKey(u => u.Id);
         builder.Property(u => u.FullName).IsRequired().HasMaxLength(100);
