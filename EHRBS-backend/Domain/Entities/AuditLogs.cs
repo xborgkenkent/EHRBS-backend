@@ -7,12 +7,18 @@ namespace EHRBS_backend.Domain.Entities
     {
         [Key]
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public Guid MedicalRecordId { get; set; }
+        public Guid TenantId { get; set; }
         public string Action { get; set; }
         public string TableAffected { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        [ForeignKey("UserId")]
-        public User User { get; set; }
-        
+        //[ForeignKey("UserId")]
+        //public Users Users { get; set; }
+        //[ForeignKey("RecordId")]
+        //public MedicalRecords MedicalRecords { get; set; }
+        //[ForeignKey("TenantId")]
+        //public Tenants Tenants { get; set; }
     }
 }
