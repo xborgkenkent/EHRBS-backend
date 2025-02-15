@@ -11,11 +11,14 @@
 - **Multi-Tenant Support** - Clinics, hospitals, and independent doctors can use it
 
 # Sequence Diagram
-![ehrbs-sqnc](https://github.com/user-attachments/assets/83992619-0c52-4f27-98ab-1128c5cea0fc)
+## Basic Flow
+![ehrbs-sqnc-`](https://github.com/user-attachments/assets/04a9a634-53ee-443a-81c9-2ed78f09477c)
+## Audit Logs Flow
+![ehrbs-sequence-audit](https://github.com/user-attachments/assets/fb3aa216-30c7-4089-97b3-53dfbb6999a5)
 
 # Entity Relationship Diagram
 ![ehrbs-erd](https://github.com/user-attachments/assets/2a26983d-25e6-4f51-a456-745eea2e1c29)
-![ehrbs-sqnc-`](https://github.com/user-attachments/assets/04a9a634-53ee-443a-81c9-2ed78f09477c)
+
 
 [ehrbs-sqnc-pdf.pdf](https://github.com/user-attachments/files/18768314/ehrbs-sqnc-pdf.pdf)
 
