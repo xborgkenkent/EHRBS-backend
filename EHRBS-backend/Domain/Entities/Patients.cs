@@ -7,6 +7,8 @@ namespace EHRBS_backend.Domain.Entities
     {
         [Key]
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public Guid TenantId { get; set; }
         public string MedicalRecordNumber { get; set; }
         public DateOnly DateOfBirth { get; set; }
         public string BloodType { get; set; }
@@ -14,7 +16,9 @@ namespace EHRBS_backend.Domain.Entities
         public string InsuranceProvider { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        [ForeignKey("TenantId")]
-        public Tenants Tenants { get; set; }
+        public ICollection<Appointments> Appointments { get; set; } = new List<Appointments>();
+        public ICollection<MedicalRecords> MedicalRecords { get; set; } = new List<MedicalRecords>();
+        public ICollection<Billings> Billings { get; set; } = new List<Billings>();
+
     }
 }
