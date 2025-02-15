@@ -15,6 +15,7 @@
 
 # Entity Relationship Diagram
 ![ehrbs-erd](https://github.com/user-attachments/assets/2a26983d-25e6-4f51-a456-745eea2e1c29)
+![ehrbs-sqnc-`](https://github.com/user-attachments/assets/04a9a634-53ee-443a-81c9-2ed78f09477c)
 
 [ehrbs-sqnc-pdf.pdf](https://github.com/user-attachments/files/18768314/ehrbs-sqnc-pdf.pdf)
 
