@@ -33,6 +33,7 @@ namespace EHRBS_backend.Infrastructure.Security
             {
                 new Claim("id", user.Id.ToString()),
                 new Claim("email", user.Email),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // Prevent token replay
             };
 
