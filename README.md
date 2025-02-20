@@ -115,3 +115,8 @@
 - **RecordId**: `UUID`
 - **Timestamp**: `TIMESTAMP`
 - **TenantId**: `UUID` (FK)
+
+## HOW TO RUN
+- **Using DockerfileDev**
+- ***docker build -t ehrbs-dev -f Dockerfile.dev .***
+- ***docker run -p 8080:80 -v $(pwd):/app ehrbs-dev***
